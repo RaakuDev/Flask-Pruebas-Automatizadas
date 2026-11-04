@@ -34,9 +34,12 @@ pipeline {
             }
         }
         
+       
         stage('Security Test') {
             steps {
                 echo 'Analizando dependencias con OWASP Dependency-Check...'
+
+                sh 'mkdir -p dependency-check-report'
 
                 dependencyCheck(
                     odcInstallation: 'DependencyCheck',
@@ -46,8 +49,14 @@ pipeline {
                 dependencyCheckPublisher(
                     pattern: 'dependency-check-report/dependency-check-report.xml'
                 )
+
+                archiveArtifacts(
+                    artifacts: 'dependency-check-report/*.html',
+                    allowEmptyArchive: true
+                )
             }
         }
+
 
     }
 
