@@ -2,11 +2,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Nombre configurado en Manage Jenkins > Tools
-        // SonarScanner se utilizará en la etapa Analyze
-    }
-
     stages {
         stage('Build') {
             steps {
