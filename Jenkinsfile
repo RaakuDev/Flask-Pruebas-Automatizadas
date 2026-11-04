@@ -43,7 +43,7 @@ pipeline {
 
                 dependencyCheck(
                     odcInstallation: 'DependencyCheck',
-                    additionalArguments: '--scan requirements.txt --format HTML --format XML --out dependency-check-report'
+                    additionalArguments: '--scan requirements.txt --format HTML --format XML --out dependency-check-report --nvdApiResultsPerPage 1000 --nvdApiDelay 8000'
                 )
 
                 dependencyCheckPublisher(
