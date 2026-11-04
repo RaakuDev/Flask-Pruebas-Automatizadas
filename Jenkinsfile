@@ -56,6 +56,20 @@ pipeline {
                 )
             }
         }
+        
+        stage('OWASP ZAP') {
+            steps {
+                echo 'Ejecutando análisis de seguridad con OWASP ZAP...'
+
+                sh '.venv/bin/python zap_scan.py'
+
+                archiveArtifacts(
+                    artifacts: 'zap-results.json',
+                    allowEmptyArchive: false
+                )
+            }
+        }
+
 
 
     }
