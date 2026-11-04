@@ -70,6 +70,28 @@ pipeline {
             }
         }
 
+        
+        stage('Deploy') {
+            steps {
+                echo 'Desplegando aplicación Flask...'
+
+                sh '''
+                    mkdir -p deploy
+                    cp app.py requirements.txt deploy/
+
+                    .venv/bin/python -m compileall -q deploy/
+
+                    echo "Aplicación preparada en deploy/"
+                '''
+
+                archiveArtifacts(
+                    artifacts: 'deploy/**',
+                    allowEmptyArchive: false
+                )
+            }
+        }
+
+
 
 
     }
