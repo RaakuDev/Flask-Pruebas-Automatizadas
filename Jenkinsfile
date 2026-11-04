@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Preparando aplicación Flask...'
-                sh 'python3 -m pip install --user -r requirements.txt'
+                sh 'python3 -m pip install -r requirements.txt'
             }
         }
 
