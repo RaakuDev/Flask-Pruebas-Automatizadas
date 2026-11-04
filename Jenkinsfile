@@ -33,6 +33,22 @@ pipeline {
                 }
             }
         }
+        
+        stage('Security Test') {
+            steps {
+                echo 'Analizando dependencias con OWASP Dependency-Check...'
+
+                dependencyCheck(
+                    odcInstallation: 'DependencyCheck',
+                    additionalArguments: '--scan requirements.txt --format HTML --format XML --out dependency-check-report'
+                )
+
+                dependencyCheckPublisher(
+                    pattern: 'dependency-check-report/dependency-check-report.xml'
+                )
+            }
+        }
+
     }
 
     post {
