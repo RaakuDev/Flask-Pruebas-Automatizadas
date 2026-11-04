@@ -2,6 +2,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Nombre configurado en Manage Jenkins > Tools
+        // SonarScanner se utilizará en la etapa Analyze
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -19,11 +24,25 @@ pipeline {
                 sh '.venv/bin/python -m unittest discover -v'
             }
         }
+
+        stage('Analyze') {
+            steps {
+                echo 'Analizando código con SonarQube...'
+
+                script {
+                    def scannerHome = tool 'SonarScanner'
+
+                    withSonarQubeEnv('SonarQube-Local') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build y Test completados correctamente.'
+            echo 'Build, Test y Analyze completados correctamente.'
         }
 
         failure {
